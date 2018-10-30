@@ -1,3 +1,3 @@
 # bitcoind
 
-test bitcoind docker images
+test bitcoind multi-arch docker images
