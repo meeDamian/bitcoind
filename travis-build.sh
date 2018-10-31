@@ -23,7 +23,7 @@ sudo apt-get install qemu qemu-user-static binfmt-support -y
 
 docker run --rm --privileged multiarch/qemu-user-static:register --reset
 
-if [ "$ARCH" != "arm32v6" ]; then
+if [ "$ARCH" == "arm32v6" ]; then
     echo "ensuring arm32v6 images are used"
     sed -ie 's/FROM alpine/FROM arm32v6\/alpine/g' Dockerfile
 fi
