@@ -1,10 +1,8 @@
 sudo: required
-
+dist: xenial
 services:
   - docker
-
 language: bash
-
 env:
   matrix:
     - ARCH=arm32v6
