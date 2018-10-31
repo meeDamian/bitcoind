@@ -24,8 +24,11 @@ RUN make
 RUN make install
 RUN rm -rf ${BERKELEYDB_PREFIX}/docs
 
+
 # Build stage for Bitcoin Core
 FROM alpine as bitcoin-core
+
+COPY qemu-* /usr/bin/
 
 COPY --from=berkeleydb /opt /opt
 
@@ -89,6 +92,8 @@ RUN strip ${BITCOIN_PREFIX}/lib/libbitcoinconsensus.so.0.0.0
 
 # Build stage for compiled artifacts
 FROM alpine
+
+COPY qemu-* /usr/bin/
 
 LABEL maintainer.0="João Fonseca (@joaopaulofonseca)" \
   maintainer.1="Pedro Branco (@pedrobranco)" \
