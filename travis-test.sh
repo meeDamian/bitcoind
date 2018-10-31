@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-docker run --rm --name=bitcoindtest ruimarinho/bitcoin-core:0.17-alpine uname -a
+docker run --rm --name=bitcoindtest bitcoind uname -a
 
 if [ "$ARCH" == "amd64" ]; then
-  docker run --rm --name=bitcoindtest ruimarinho/bitcoin-core:0.17-alpine bitcoin-cli --version
+  docker run --rm --name=bitcoindtest bitcoind bitcoin-cli --version
 fi
