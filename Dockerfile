@@ -2,7 +2,7 @@
 FROM alpine as berkeleydb
 
 # TODO: fix that later(?)
-COPY qemu-arm-static /usr/bin/
+#COPY qemu-arm-static /usr/bin/
 
 RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/https\:\/\/alpine.global.ssl.fastly.net/g' /etc/apk/repositories
 RUN apk --no-cache add autoconf
