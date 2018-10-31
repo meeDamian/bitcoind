@@ -20,10 +20,10 @@ if [ -d tmp ]; then
 fi
 
 if [ "$ARCH" == "arm32v6" ]; then
-#    sudo apt-get install -y qemu qemu-user-static binfmt-support
+    sudo apt-get install -y qemu qemu-user-static binfmt-support
     docker run --rm --privileged multiarch/qemu-user-static:register
 
-    ls -la /usr/bin
+    ls -la /usr/bin/qemu-*
 
 #    cp /usr/bin/qemu-arm-static .
 
