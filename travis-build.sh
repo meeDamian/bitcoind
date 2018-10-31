@@ -7,6 +7,11 @@ set -e
 mkdir -p ~/.docker
 echo '{ "experimental": "enabled" }' > ~/.docker/config.json
 
+if [ -d tmp ]; then
+  docker rm build
+  rm -rf tmp
+fi
+
 sudo systemctl restart docker
 
 wget -N https://github.com/multiarch/qemu-user-static/releases/download/v3.0.0/x86_64_qemu-arm-static.tar.gz
