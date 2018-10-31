@@ -1,19 +1,16 @@
 sudo: required
+
 dist: xenial
+
 services:
   - docker
+  -
 language: bash
-env:
-  matrix:
-    - ARCH=arm32v6
-#    - ARCH=amd64
 
 script:
   - ./travis-build.sh
-  - ./travis-test.sh
   - >
     if [ -n "$TRAVIS_TAG" ]; then
-      # push image
       travis_retry timeout 5m echo "$DOCKER_PASS" | docker login -u="$DOCKER_USER" --password-stdin
       ./travis-deploy.sh
     fi

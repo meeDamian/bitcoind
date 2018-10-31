@@ -1,34 +1,20 @@
 #!/bin/bash
 set -e
 
-docker version
-uname -a
-
-echo "Updating Docker engine to have multi-stage builds and manifest command"
 sudo systemctl stop docker
-curl -fsSL get.docker.com | sh
+#curl -fsSL get.docker.com | sh
 
-echo "Enabling docker client experimental features"
 mkdir -p ~/.docker
 echo '{ "experimental": "enabled" }' > ~/.docker/config.json
 
-docker version
+wget -N https://github.com/multiarch/qemu-user-static/releases/download/v3.0.0/x86_64_qemu-arm-static.tar.gz
+tar -xvf x86_64_qemu-arm-static.tar.gz
 
-if [ -d tmp ]; then
-  docker rm build
-  rm -rf tmp
-fi
+docker run --rm --privileged multiarch/qemu-user-static:register
 
-if [ "$ARCH" == "arm32v6" ]; then
-#    sudo apt-get install -y qemu qemu-user-static binfmt-support
-    wget -N https://github.com/multiarch/qemu-user-static/releases/download/v3.0.0/x86_64_qemu-arm-static.tar.gz
-    tar -xvf x86_64_qemu-arm-static.tar.gz
-
-    docker run --rm --privileged multiarch/qemu-user-static:register
-
-    echo "ensuring arm32v6 images are used"
-
-    sed -ie 's/FROM alpine/FROM arm32v6\/alpine/g' Dockerfile
-fi
+sed -ie 's/FROM alpine/FROM arm32v6\/alpine/g' Dockerfile
 
 docker build --no-cache -t bitcoind .
+
+docker run --rm bitcoind uname -a
+docker run --rm bitcoind bitcoin-cli --version

@@ -1,5 +1,6 @@
 # Build stage for BerkeleyDB
 FROM alpine as berkeleydb
+FROM alpine as berkeleydb
 
 COPY qemu-* /usr/bin/
 
