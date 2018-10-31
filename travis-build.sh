@@ -5,7 +5,7 @@ docker version
 uname -a
 
 echo "Updating Docker engine to have multi-stage builds and manifest command"
-sudo service docker stop
+sudo systemctl stop docker
 curl -fsSL get.docker.com | sh
 
 echo "Enabling docker client experimental features"
