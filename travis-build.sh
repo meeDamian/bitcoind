@@ -19,13 +19,14 @@ if [ -d tmp ]; then
   rm -rf tmp
 fi
 
-sudo apt-get install qemu qemu-user-static binfmt-support -y
-
-docker run --rm --privileged multiarch/qemu-user-static:register --reset
-
 if [ "$ARCH" == "arm32v6" ]; then
+    sudo apt-get install -y qemu qemu-user-static binfmt-support
+    docker run --rm --privileged multiarch/qemu-user-static:register --reset
+
+    cp /usr/bin/qemu-arm-static .
+
     echo "ensuring arm32v6 images are used"
     sed -ie 's/FROM alpine/FROM arm32v6\/alpine/g' Dockerfile
 fi
 
-docker build -t bitcoind .
+docker build --no-cache -t bitcoind .
