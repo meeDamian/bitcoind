@@ -29,7 +29,7 @@ if [ "$ARCH" == "arm32v6" ]; then
 
     echo "ensuring arm32v6 images are used"
 
-    sed -ie 's/FROM alpine/FROM arm32v6\/alpine/g' Dockerfile
+    sed -i "" -e 's/FROM alpine/FROM arm32v6\/alpine/g' Dockerfile
 fi
 
 docker build --no-cache -t bitcoind .
