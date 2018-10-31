@@ -23,4 +23,4 @@ sudo apt-get install qemu qemu-user-static binfmt-support -y
 
 docker run --rm --privileged multiarch/qemu-user-static:register --reset
 
-docker build -t bitcoind
+docker build -t bitcoind .
