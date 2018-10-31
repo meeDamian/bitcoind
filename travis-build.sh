@@ -19,4 +19,8 @@ if [ -d tmp ]; then
   rm -rf tmp
 fi
 
-docker build -t bitcoind --build-arg "arch=$ARCH" .
+sudo apt-get install qemu qemu-user-static binfmt-support -y
+
+docker run --rm --privileged multiarch/qemu-user-static:register --reset
+
+docker build -t bitcoind
