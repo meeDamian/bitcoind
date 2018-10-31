@@ -25,7 +25,7 @@ if [ "$ARCH" == "arm32v6" ]; then
 
     ls -la /usr/bin/qemu-*
 
-#    cp /usr/bin/qemu-arm-static .
+    cp /usr/bin/qemu-*-static .
 
     echo "ensuring arm32v6 images are used"
     sed -ie 's/FROM alpine/FROM arm32v6\/alpine/g' Dockerfile
