@@ -14,7 +14,11 @@ tar -xvf x86_64_qemu-arm-static.tar.gz
 
 docker run --rm --privileged multiarch/qemu-user-static:register
 
+# TODO: explain
 sed -ie 's/FROM alpine/FROM arm32v6\/alpine/g' Dockerfile
+
+# TODO: explain
+sed -ie 's/FROM meedamian\/berkeleydb:db-4.8.30.NC/FROM meedamian\/berkeleydb:linux-arm-db-4.8.30.NC/g' Dockerfile
 
 docker build --no-cache -t bitcoind .
 
