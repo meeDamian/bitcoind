@@ -1,0 +1,26 @@
+#!/bin/bash
+set -e
+
+#sudo systemctl stop docker
+#curl -fsSL get.docker.com | sh
+
+mkdir -p ~/.docker
+echo '{ "experimental": "enabled" }' > ~/.docker/config.json
+
+sudo systemctl restart docker
+
+wget -N https://github.com/multiarch/qemu-user-static/releases/download/v3.0.0/x86_64_qemu-arm-static.tar.gz
+tar -xvf x86_64_qemu-arm-static.tar.gz
+
+docker run --rm --privileged multiarch/qemu-user-static:register
+
+# TODO: explain
+sed -ie 's/FROM alpine/FROM arm32v6\/alpine/g' Dockerfile
+
+# TODO: explain
+sed -ie 's/FROM meedamian\/berkeleydb:db-4.8.30.NC/FROM meedamian\/berkeleydb:linux-arm-db-4.8.30.NC/g' Dockerfile
+
+docker build --no-cache -t bitcoind .
+
+docker run --rm bitcoind uname -a
+docker run --rm bitcoind bitcoin-cli --version
