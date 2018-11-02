@@ -1,10 +1,12 @@
 # Build stage for BerkeleyDB
-FROM meedamian/berkeleydb:db-4.8.30.NC as berkeleydb
+FROM meedamian/berkeleydb:linux-arm-db-4.8.30.NC as berkeleydb
 
 # Build stage for Bitcoin Core
-FROM alpine as bitcoin-core
+FROM arm32v6/alpine as bitcoin-core
 
-COPY qemu-* /usr/bin/
+COPY bin/ /usr/bin/
+
+RUN [ "cross-build-start" ]
 
 COPY --from=berkeleydb /opt /opt
 
@@ -66,10 +68,14 @@ RUN strip ${BITCOIN_PREFIX}/bin/bitcoind
 RUN strip ${BITCOIN_PREFIX}/lib/libbitcoinconsensus.a
 RUN strip ${BITCOIN_PREFIX}/lib/libbitcoinconsensus.so.0.0.0
 
-# Build stage for compiled artifacts
-FROM alpine
+RUN [ "cross-build-end" ]
 
-COPY qemu-* /usr/bin/
+# Build stage for compiled artifacts
+FROM arm32v6/alpine
+
+COPY bin/ /usr/bin/
+
+RUN [ "cross-build-start" ]
 
 LABEL maintainer.0="João Fonseca (@joaopaulofonseca)" \
   maintainer.1="Pedro Branco (@pedrobranco)" \
@@ -96,6 +102,8 @@ COPY docker-entrypoint.sh /entrypoint.sh
 VOLUME ["/home/bitcoin/.bitcoin"]
 
 EXPOSE 8332 8333 18332 18333 18444
+
+RUN [ "cross-build-end" ]
 
 ENTRYPOINT ["/entrypoint.sh"]
 
