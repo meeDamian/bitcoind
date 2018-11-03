@@ -1,0 +1,5 @@
+---
+  bitcoind: 
+    build: 
+      image: "meedamian/bitcoind:codeship"
+      dockerfile: "Dockerfile"

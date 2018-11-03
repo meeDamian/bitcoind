@@ -1,0 +1,2 @@
+- service: bitcoind
+  command: docker build --no-cache -t bitcoind .
